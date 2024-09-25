@@ -1,0 +1,133 @@
+#!/bin/bash
+
+
+
+# part 2.1
+# generate a random number betwee 1 and 20
+#random_number=$((1 + RANDOM % 20))
+# output random number
+#printf "You rolled a $random_number\n"
+
+
+# part 2.2
+# request a number >= 1 from user
+#printf "Enter a Number Greater Than or Equal to 1: "
+#read user_number
+# check if number is < 1 print error, if number is >= 1 generate random number
+#if [[ $user_number -lt 1 ]]; then
+#	printf "ERROR! You did not enter a number greater than 1.\n"
+#else
+#	random_number=$((1 + RANDOM % $user_number))
+#	printf "Your random number is $random_number\n"
+#fi
+
+
+# part 2.3
+# take number from command line and print random number
+#if [[ -n "$1" ]]; then
+#	random_number=$((1 + RANDOM % $1))
+#        printf "You rolled a $random_number\n"
+# if no input provided from command line print error 
+#else
+#	printf "ERROR! You did not enter a number.\n"
+#fi
+
+
+# part 2.4
+# take number from command line the is greater than 1
+# if no input is provided print error
+#if [[ -z "$1" ]]; then
+#	printf "ERROR! You did not enter a number.\n"
+# verify input is greater than 1: if number is <= 1 print error, if number is greater than 1 generate random number
+#elif [[ $1 -le 1 ]]; then
+#	printf "ERROR! You did not enter a number greater than 1.\n"
+#else
+#	random_number=$((1 + RANDOM % $1))
+#	printf "You rolled a $random_number.\n"
+#fi
+
+
+# part 2.5
+# take number form command line
+user_number=$1
+# loop until a valid number has been entered from command line the generate random number  
+#while [[ -z "$user_number" ]] || [[ $user_number -le 1 ]]; do
+#	printf "You did not provide a valid input. Enter a number greater than 1: "
+#	read user_number
+#done
+#	random_number=$((1 + RANDOM % $user_number))
+#	printf "You rolled a $random_number.\n"
+
+
+# part 2.6
+# check number of inputs from command line and assign them to variables
+#num_of_input=$#
+#user_number_1=$1
+#user_number_2=$2
+# loop until only two valid numbers have been input from command line
+#while [[ num_of_input -ne 2 ]] || [[ -z "$user_number_1" ]] || [[ $user_number_1 -le 1 ]] || [[ -z "$user_number_2" ]] || [[ $user_number_2 -le 1 ]]; do
+#	read -a user_input -p "You did not provide a valid pair of inputs.  Enter two numbers greater than 1: "
+# check number of inputs from user input and assign them to variables
+#	num_of_input=${#user_input[*]}
+#	user_number_1=${user_input[0]}
+#	user_number_2=${user_input[1]}	
+#done
+# loop based on first input and provide random number based on second input in single command line
+#i=1
+#while [[ $i -le $user_number_1 ]]; do
+#	random_number=$((1 + RANDOM % $user_number_2))
+#	printf "Die $i rolled a $random_number    "
+#	((i = i + 1))	
+#done
+#printf "\n"
+
+
+# extra credit
+# check inputs for floating point numbers and loop until only two valid integers are entered
+num_of_input=$#
+user_number_1=$1
+user_number_2=$2
+for i in $user_number_1; do
+	if [[ $i == *.* ]]; then
+		user_number_1=0
+	fi
+done
+
+for i in $user_number_2; do
+        if [[ $i == *.* ]]; then
+                user_number_2=0
+        fi
+done
+
+
+# loop until only two valid numbers have been input from command line
+while [[ num_of_input -ne 2 ]] || [[ -z "$user_number_1" ]] || [[ $user_number_1 -le 1 ]] || [[ -z "$user_number_2" ]] || [[ $user_number_2 -le 1 ]]; do
+       read -a user_input -p "You did not provide a valid pair of inputs.  Enter two numbers greater than 1: "
+# check number of inputs from user input and assign them to variables
+       num_of_input=${#user_input[*]}
+       user_number_1=${user_input[0]}
+       user_number_2=${user_input[1]}
+
+for i in $user_number_1; do
+      	if [[ $i == *.* ]]; then
+                user_number_1=0
+        fi
+done
+
+for i in $user_number_2; do
+        if [[ $i == *.* ]]; then
+                user_number_2=0
+        fi
+done
+
+
+done
+# loop based on first input and provide random number based on second input in single command line
+i=1
+while [[ $i -le $user_number_1 ]]; do
+       random_number=$((1 + RANDOM % $user_number_2))
+       printf "Die $i rolled a $random_number    "
+       ((i = i + 1))
+done
+printf "\n"
+

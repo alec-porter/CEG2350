@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# this script takes the input of a file with a list of emails and sorts the file while also removing duplicate email address
+
+inputFile=$1
+
+# check if a filename was input
+while [[ ! -f $inputFile ]]; do
+	printf "File not found.  Enter a valid filename: "
+	read inputFile
+done
+
+# sort file, remove duplicate strings, write to clean1.txt file
+sort $inputFile | uniq > clean1.txt
+
+# match begining of string to letter or number and write to clean2.txt
+# ^[... matches at the begining of the string
+# [A-Za-z0-9] matches alphanumeric values only (upper and lower case)
+grep -E "^[A-Za-z0-9]" clean1.txt > clean2.txt
+
+# remove two or more none alphanumeric entries and write remaining strips to clean3.txt
+# [^A-Za-z0-9]+[^A-Za-z0-9] matches two consecutive non-alphanumeric characters
+# -v takes the inverse of the match 
+grep -Ev "[^A-Za-z0-9]+[^A-Za-z0-9]" clean2.txt > clean3.txt
+
+# remove invalid domains and write to clean4.txt
+# @.*\.org$ matches strings containing the @ symbol AND a .org at the end of the string, use OR (|) to do the same with .net/.com
+# [^@.*@] matches any strings with multiple @ symbols and inverts the result using ^ so only strings with one @ are kept
+grep -Ei "@.*\.org$|@.*\.net$|@.*\.com$" clean3.txt | grep -E [^@.*@] > clean4.txt
